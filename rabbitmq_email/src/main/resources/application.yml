@@ -1,0 +1,22 @@
+server:
+  port: 8080
+spring:
+  mail:
+    host: smtp.163.com
+    username: lytw1315@163.com
+    password: lytw1315
+    subject: "欢迎注册！"
+    text: "欢迎注册lytw13's blog！"
+  rabbitmq:
+    addresses: 47.95.141.83
+    username: guest
+    password: guest
+    port: 5672
+  datasource:
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/db_demo_sys?serverTimezone=Asia/Shanghai
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  config-location: classpath:mybatis/mybatis.xml
