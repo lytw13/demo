@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="7760df9e-3cc3-4138-8d6d-6d0b80f78c83" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageViewManager">
+    <option name="myElementSize" value="208" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="localRepository" value="D:\Program Data\Maven Repository" />
+        <option name="mavenHome" value="D:/Program Files/Java/apache-maven-3.6.2" />
+        <option name="userSettingsFile" value="D:\Program Files\Java\apache-maven-3.6.2\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1VHpdAVt4qsOWrgjfV0JgWeViJN" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\lytw13\demo_redis\src\main\resources" />
+      <recent name="E:\lytw13\demo_redis\src\main\java\com\lytw13\demo" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="RedisApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="demo_redis" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.lytw13.demo.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.lytw13.demo.RedisApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.RedisApplication" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7760df9e-3cc3-4138-8d6d-6d0b80f78c83" name="Default Changelist" comment="" />
+      <created>1576919959069</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1576919959069</updated>
+      <workItem from="1576919960922" duration="4000" />
+      <workItem from="1576919992180" duration="14000" />
+      <workItem from="1576920036081" duration="2477000" />
+      <workItem from="1576926934705" duration="3607000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="574" y="121" key="#com.intellij.ide.util.MemberChooser" timestamp="1576926039699">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="574" y="121" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1576926039699" />
+    <state width="1478" height="232" key="GridCell.Tab.0.bottom" timestamp="1576934980214">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1478" height="232" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1576934980214" />
+    <state width="1478" height="232" key="GridCell.Tab.0.center" timestamp="1576934980213">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1478" height="232" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1576934980213" />
+    <state width="1478" height="232" key="GridCell.Tab.0.left" timestamp="1576934980213">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1478" height="232" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1576934980213" />
+    <state width="1478" height="232" key="GridCell.Tab.0.right" timestamp="1576934980214">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1478" height="232" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1576934980214" />
+    <state width="1478" height="232" key="GridCell.Tab.1.bottom" timestamp="1576934980010">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1478" height="232" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1576934980010" />
+    <state width="1478" height="232" key="GridCell.Tab.1.center" timestamp="1576934980010">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1478" height="232" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1576934980010" />
+    <state width="1478" height="232" key="GridCell.Tab.1.left" timestamp="1576934980010">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1478" height="232" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1576934980010" />
+    <state width="1478" height="232" key="GridCell.Tab.1.right" timestamp="1576934980010">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1478" height="232" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1576934980010" />
+    <state width="1478" height="232" key="GridCell.Tab.2.bottom" timestamp="1576934980011">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1478" height="232" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1576934980011" />
+    <state width="1478" height="232" key="GridCell.Tab.2.center" timestamp="1576934980010">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1478" height="232" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1576934980010" />
+    <state width="1478" height="232" key="GridCell.Tab.2.left" timestamp="1576934980010">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1478" height="232" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1576934980010" />
+    <state width="1478" height="232" key="GridCell.Tab.2.right" timestamp="1576934980010">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1478" height="232" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1576934980010" />
+    <state x="299" y="70" key="Maven.ArtifactSearchDialog" timestamp="1576920075693">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="299" y="70" key="Maven.ArtifactSearchDialog/0.0.1536.824@0.0.1536.824" timestamp="1576920075693" />
+    <state x="272" y="57" key="SettingsEditor" timestamp="1576926911744">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="272" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1576926911744" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1576934315649">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1576934315649" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/demo_redis$RedisApplication.ic" NAME="RedisApplication Coverage Results" MODIFIED="1576927442326" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.lytw13.demo.*</FILTER>
+    </SUITE>
+  </component>
+</project>
