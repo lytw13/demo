@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lytw13.demo.dao.RoleMenuMapper">
+    <resultMap id="BaseResultMap" type="com.lytw13.demo.model.TbRoleMenu">
+        <id column="role_menu_id" jdbcType="INTEGER" property="role_menu_id" />
+        <id column="role_id" jdbcType="INTEGER" property="role_id" />
+        <id column="menu_id" jdbcType="INTEGER" property="menu_id" />
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+        role_menu_id,role_id,menu_id
+    </sql>
+
+    <insert id="insert" parameterType="com.lytw13.demo.model.TbRoleMenu">
+        insert into tb_role_menu values(null,#{role_id},#{menu_id})
+    </insert>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from tb_role_menu where role_id = #{role_id}
+    </delete>
+</mapper>

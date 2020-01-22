@@ -1,0 +1,28 @@
+package com.lytw13.demo.adapter.impl;
+
+import com.lytw13.demo.adapter.MessageAdapter;
+import com.lytw13.demo.model.TbUser;
+import com.lytw13.demo.utils.MailUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
+
+@Service
+public class MessageAdapterImpl implements MessageAdapter {
+
+    @Autowired
+    JavaMailSender javaMailSender;
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    @Value("${spring.mail.username}")
+    private String from;
+
+    @Override
+    public void sendMessage(TbUser user) {
+        logger.info("#################请求给{}发送邮件", user.getEmail());
+        MailUtil.sendHtmlTemplateMail(user.getEmail(),user.getName(),null);
+        logger.info("#################给{}发送邮件，发送完成",user.getEmail());
+    }
+}

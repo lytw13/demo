@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lytw13.demo.dao.RoleMapper">
+    <resultMap id="BaseResultMap" type="com.lytw13.demo.model.TbRole">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="sequence" jdbcType="INTEGER" property="sequence" />
+        <result column="status" jdbcType="INTEGER" property="status" />
+        <collection property="tbUserList" javaType="java.util.List" resultMap="UserResult" />
+        <collection property="tbMenuList" javaType="java.util.List" resultMap="MenuResult" />
+    </resultMap>
+
+    <resultMap id="UserResult" type="com.lytw13.demo.model.TbUser" >
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="sex" jdbcType="INTEGER" property="sex" />
+        <result column="icon" jdbcType="VARCHAR" property="icon" />
+        <result column="phone" jdbcType="VARCHAR" property="phone" />
+        <result column="email" jdbcType="VARCHAR" property="email" />
+        <result column="status" jdbcType="INTEGER" property="status" />
+        <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
+    </resultMap>
+
+    <resultMap id="MenuResult" type="com.lytw13.demo.model.TbMenu">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="icon" jdbcType="VARCHAR" property="icon" />
+        <result column="url" jdbcType="VARCHAR" property="url" />
+        <result column="permission" jdbcType="VARCHAR" property="permission" />
+        <result column="status" jdbcType="INTEGER" property="status" />
+        <result column="pid" jdbcType="INTEGER" property="pid" />
+        <result column="type" jdbcType="VARCHAR" property="type" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id,name,sequence,status
+    </sql>
+
+
+    <insert id="insert" parameterType="com.lytw13.demo.model.TbRole"  useGeneratedKeys="true" keyProperty="id">
+        insert into tb_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">
+                id,
+            </if>
+            <if test="name != null and name != ''">
+                name,
+            </if>
+            <if test="sequence != null and sequence != ''">
+                sequence,
+            </if>
+            <if test="status != null and status != ''">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="name != null and name != ''">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="sequence != null and sequence != ''">
+                #{sequence,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null and status != ''">
+                #{status,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_role
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.lytw13.demo.model.TbRole">
+        update tb_role
+        <set>
+            <trim suffixOverrides=",">
+                <if test="name != null and name != ''">
+                    name = #{name,jdbcType=VARCHAR},
+                </if>
+                <if test="sequence != null and sequence != ''">
+                    sequence = #{sequence,jdbcType=VARCHAR},
+                </if>
+                <if test="status != null and status != ''">
+                    status = #{status,jdbcType=INTEGER},
+                </if>
+            </trim>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tb_role
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="list" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from tb_role
+    </select>
+</mapper>

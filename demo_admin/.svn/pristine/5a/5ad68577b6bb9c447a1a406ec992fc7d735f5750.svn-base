@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lytw13.demo.dao.MenuMapper">
+    <resultMap id="BaseResultMap" type="com.lytw13.demo.model.TbMenu">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="icon" jdbcType="VARCHAR" property="icon" />
+        <result column="url" jdbcType="VARCHAR" property="url" />
+        <result column="permission" jdbcType="VARCHAR" property="permission" />
+        <result column="status" jdbcType="INTEGER" property="status" />
+        <result column="pid" jdbcType="INTEGER" property="pid" />
+        <result column="type" jdbcType="VARCHAR" property="type" />
+        <collection property="roleList" javaType="java.util.List" resultMap="RoleResult" />
+    </resultMap>
+    <resultMap id="RoleResult" type="com.lytw13.demo.model.TbRole" >
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="sequence" jdbcType="INTEGER" property="sequence" />
+        <result column="status" jdbcType="INTEGER" property="status" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id,name,icon,url,permission,status,pid,type
+    </sql>
+
+
+    <insert id="insert" parameterType="com.lytw13.demo.model.TbMenu"  useGeneratedKeys="true" keyProperty="id">
+        insert into tb_menu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">
+                id,
+            </if>
+            <if test="name != null and name != ''">
+                name,
+            </if>
+            <if test="icon != null and icon != ''">
+                icon,
+            </if>
+            <if test="url != null and url != ''">
+                url,
+            </if>
+            <if test="permission != null and permission != ''">
+                permission,
+            </if>
+            <if test="status != null and status != ''">
+                status,
+            </if>
+            <if test="pid != null and pid != ''">
+                pid,
+            </if>
+            <if test="type != null and type != ''">
+                type
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="name != null and name != ''">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="icon != null and icon != ''">
+                #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null and url != ''">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="permission != null and permission != ''">
+                #{permission,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null and status != ''">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="pid != null and pid != ''">
+                #{pid,jdbcType=INTEGER},
+            </if>
+            <if test="type != null and type != ''">
+                #{type,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_menu
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.lytw13.demo.model.TbMenu">
+        update tb_menu
+        <set>
+            <trim suffixOverrides=",">
+                <if test="name != null and name != ''">
+                    name = #{name,jdbcType=VARCHAR},
+                </if>
+                <if test="icon != null and icon != ''">
+                    icon = #{icon,jdbcType=VARCHAR},
+                </if>
+                <if test="url != null and url != ''">
+                    url = #{url,jdbcType=VARCHAR},
+                </if>
+                <if test="permission != null and permission != ''">
+                    permission = #{permission,jdbcType=VARCHAR},
+                </if>
+                <if test="status != null and status != ''">
+                    status = #{status,jdbcType=INTEGER},
+                </if>
+                <if test="pid != null and pid != ''">
+                    pid = #{pid,jdbcType=INTEGER},
+                </if>
+                <if test="type != null and type != ''">
+                    type = #{type,jdbcType=VARCHAR},
+                </if>
+            </trim>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tb_menu
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="list" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from tb_menu
+    </select>
+    
+    
+</mapper>

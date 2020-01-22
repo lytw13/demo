@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>lytw13 | 首页</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- 图标-->
+    <link rel="shortcut icon" th:href="@{/img/favicon.ico}">
+    
+    <!-- 核心CSS-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+    
+    <!-- 默认样式表-->
+    <link rel="stylesheet" th:href="@{/css/AdminLTE.css}">
+    <link rel="stylesheet" th:href="@{/css/skins/skin-blue.min.css}">
+
+	<!-- 自定义样式-->
+    <link rel="stylesheet" th:href="@{/css/customer/custom.css}">
+   
+  </head>
+  
+  
+<body class="hold-transition skin-blue sidebar-mini">
+	<div class="wrapper">
+		<div th:insert="common/common :: top"></div>
+		<div th:insert="common/common :: sidebar"></div>
+			<div class="content-wrapper">
+		    <section class="content-header">
+		      <ol class="breadcrumb">
+		        <li><a th:href="@{/index}" class="active"><i class="fa fa-dashboard"></i> 首页</a></li>
+		      </ol>
+		    </section>
+          	
+				<section class="content" style="margin-top:30px">
+					 <div id="main" style="width: 1200px;height:480px;"></div>
+					 <div id="rightContainer">
+					 	<ol>
+					 	</ol>
+					 </div>
+				</section>
+			</div>
+			
+			
+			<footer th:insert="common/common :: footer"></footer>
+			<div class="control-sidebar-bg"></div>
+			</div>
+	
+	 <!-- js基础文件-->
+    <script th:src="@{/js/jquery-3.4.1.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/app.min.js}"></script>
+    
+    <script th:src="@{/js/echart/echarts.min.js}"></script>
+    
+    <script type="text/javascript">
+    	$(document).ready(function(){
+    		var arr=[];
+    		$.ajax({
+          	   url: "/user/totalBySex",
+          	   type: "post",
+          	   success: function(data) {
+          		var json = eval(data);
+          		$.each(json,function(key,value){
+          			var obj = new Object();
+          			obj.value = value;
+          			obj.name = key;
+          			arr.push(obj);
+          		});
+          	   }
+          	 });
+    	alert(arr);	
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        var option = {
+        			    title : {
+        			        text: 'lytw13网站用户男女所占比例',
+        			        x:'center'
+        			    },
+        			    tooltip : {
+        			        trigger: 'item',
+        			        formatter: "{a} <br/>{b} : {c} ({d}%)"
+        			    },
+        			    legend: {
+        			        orient: 'vertical',
+        			        left: 'left',
+        			        data: ['男生','女生']
+        			    },
+        			    series : [
+        			        {
+        			            name: '男女生所占比例',
+        			            type: 'pie',
+        			            radius : '60%',  //大小可以理解为
+        			            center: ['50%', '60%'],  //第一项是相对于容器宽度，第二项是相对于容器高度。
+        			            data:arr,
+        			            itemStyle: {
+        			                emphasis: {
+        			                    shadowBlur: 10,
+        			                    shadowOffsetX: 0,
+        			                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+        			                }
+        			            }
+        			        }
+        			    ]
+        			};
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+        myChart.on("click", function(params) {
+        	console.log(params.name);
+        	window.location.href="/user/listPage";
+        });
+        var notices=[];
+        $.ajax({
+       	   url: "/notice/list",
+       	   type: "post",
+       	   success: function(data) {
+       		var json = eval(data);
+       		$.each(json,function(key,value){
+      			var obj = new Object();
+      			obj.value = value;
+      			obj.name = key;
+      			notices.push(obj);
+      		});
+       	   }
+       	 });
+        
+        
+    	});
+    </script>
+</body>
+</html>

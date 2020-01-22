@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>AdminLTE 2 | Starter</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- 图标-->
+    <link rel="shortcut icon" th:href="@{/img/favicon.ico}">
+    
+    <!-- 核心CSS-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+    
+    <!-- 默认样式表-->
+    <link rel="stylesheet" th:href="@{/css/AdminLTE.css}">
+    <link rel="stylesheet" th:href="@{/css/skins/skin-blue.min.css}">
+
+	<!-- 自定义样式-->
+    <link rel="stylesheet" th:href="@{/css/customer/custom.css}">
+   
+  </head>
+  
+  
+<body class="hold-transition skin-blue sidebar-mini">
+		 
+          	
+					<div class="error-page">
+        <h2 class="headline text-yellow"> 405</h2>
+
+        <div class="error-content">
+           <h3><i class="fa fa-warning text-yellow"></i> Oops! Page has errors.</h3>
+
+          <p>
+            The page has one or more errors,please connect with superadmin.
+            Meanwhile, you may <a href="../../index.html">return to dashboard</a> or try using the search form.
+          </p>
+
+          <form class="search-form">
+            <div class="input-group">
+              <input type="text" name="search" class="form-control" placeholder="Search">
+
+              <div class="input-group-btn">
+                <button type="submit" name="submit" class="btn btn-warning btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </div>
+            </div>
+            <!-- /.input-group -->
+          </form>
+        </div>
+        <!-- /.error-content -->
+      </div>
+			
+			
+	 <!-- js基础文件-->
+    <script th:src="@{/js/jquery-3.4.1.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/app.min.js}"></script>
+    
+</body>
+</html>

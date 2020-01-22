@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lytw13.demo.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.lytw13.demo.model.TbUser">
+        <id column="user_id" jdbcType="INTEGER" property="id" />
+        <result column="user_name" jdbcType="VARCHAR" property="name" />
+        <result column="user_password" jdbcType="VARCHAR" property="password" />
+        <result column="user_sex" jdbcType="INTEGER" property="sex" />
+        <result column="user_icon" jdbcType="VARCHAR" property="icon" />
+        <result column="user_phone" jdbcType="VARCHAR" property="phone" />
+        <result column="user_email" jdbcType="VARCHAR" property="email" />
+        <result column="user_status" jdbcType="INTEGER" property="status" />
+        <result column="user_createDate" jdbcType="TIMESTAMP" property="createDate" />
+<!--        <collection property="deptList" javaType="java.util.List" resultMap="DeptResult" />-->
+<!--        <collection property="roleList" javaType="java.util.List" resultMap="RoleResult" />-->
+    </resultMap>
+
+    <resultMap id="DeptResult" type="com.lytw13.demo.model.TbDept" >
+        <id column="dept_id" jdbcType="INTEGER" property="id" />
+        <result column="dept_name" jdbcType="VARCHAR" property="name" />
+        <result column="dept_sequence" jdbcType="INTEGER" property="sequence" />
+        <result column="dept_leader" jdbcType="VARCHAR" property="leader" />
+        <result column="dept_status" jdbcType="INTEGER" property="status" />
+        <result column="dept_pid" jdbcType="INTEGER" property="pid" />
+    </resultMap>
+    <resultMap id="RoleResult" type="com.lytw13.demo.model.TbRole" >
+        <id column="role_id" jdbcType="INTEGER" property="id" />
+        <result column="role_name" jdbcType="VARCHAR" property="name" />
+        <result column="role_sequence" jdbcType="INTEGER" property="sequence" />
+        <result column="role_status" jdbcType="INTEGER" property="status" />
+    </resultMap>
+
+    <resultMap id="MenuResult" type="com.lytw13.demo.model.TbMenu">
+        <id column="menu_id" jdbcType="INTEGER" property="id" />
+        <result column="menu_name" jdbcType="VARCHAR" property="name" />
+        <result column="menu_icon" jdbcType="VARCHAR" property="icon" />
+        <result column="menu_url" jdbcType="VARCHAR" property="url" />
+        <result column="menu_permission" jdbcType="VARCHAR" property="permission" />
+        <result column="menu_status" jdbcType="INTEGER" property="status" />
+        <result column="menu_pid" jdbcType="INTEGER" property="pid" />
+        <result column="menu_type" jdbcType="VARCHAR" property="type" />
+        <collection property="roleList" javaType="java.util.List" resultMap="RoleResult" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    user_id,user_name,user_password,user_sex,user_icon,user_phone,user_email,user_status,user_createDate
+    </sql>
+    <sql id="Dept_Column_List">
+    u.user_id,u.user_name,u.user_password,u.user_sex,u.user_icon,u.user_phone,u.user_email,u.user_status,u.user_createDate,
+    d.id,d.name,d.sequence,d.leader,d.status,d.pid
+    </sql>
+    <sql id="All_Column_List">
+    u.user_id,u.user_name,u.user_password,u.user_sex,u.user_icon,u.user_phone,u.user_email,u.user_status,u.user_createDate,
+    r.role_id,r.role_name,r.role_sequence,r.role_status,
+    m.menu_id,m.menu_name,m.menu_icon,m.menu_url,m.menu_permission,m.menu_sequence,m.menu_status,m.menu_pid,m.menu_type
+    </sql>
+    <insert id="insert" parameterType="com.lytw13.demo.model.TbUser"  useGeneratedKeys="true" keyProperty="id">
+        insert into tb_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">
+                user_id,
+            </if>
+            <if test="name != null and name!= ''">
+                user_name,
+            </if>
+            <if test="password != null and password!= ''">
+                user_password,
+            </if>
+            <if test="sex != null and sex!= ''">
+                user_sex,
+            </if>
+            <if test="icon != null and icon!= ''">
+                user_icon,
+            </if>
+            <if test="phone!= null and phone!= ''">
+                user_phone,
+            </if>
+            <if test="email!= null and email!= ''">
+                user_email,
+            </if>
+            <if test="status!= null and status!= ''">
+                user_status,
+            </if>
+            user_createDate,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="name != null and name!= ''">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null and password!= ''">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null and sex!= ''">
+                #{sex,jdbcType=INTEGER},
+            </if>
+            <if test="icon != null and icon!= ''">
+                #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="phone!= null and phone!= ''">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="email!= null and email!= ''">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="status!= null and status!= ''">
+                #{status,jdbcType=INTEGER},
+            </if>
+            CURRENT_TIMESTAMP,
+        </trim>
+    </insert>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_user
+    where user_id = #{id,jdbcType=INTEGER}
+  </delete>
+    <update id="updateByPrimaryKeySelective" parameterType="com.lytw13.demo.model.TbUser">
+        update tb_user
+        <set>
+            <trim suffixOverrides=",">
+                <if test="name != null and name!= ''">
+                    user_name = #{name,jdbcType=VARCHAR},
+                </if>
+                <if test="password != null and password!= ''">
+                    user_password = #{password,jdbcType=VARCHAR},
+                </if>
+                <if test="sex != null and sex!= ''">
+                    user_sex = #{sex,jdbcType=INTEGER},
+                </if>
+                <if test="icon != null and icon!= ''">
+                    user_icon = #{icon,jdbcType=VARCHAR},
+                </if>
+                <if test="phone!= null and phone!= ''">
+                    user_phone = #{phone,jdbcType=VARCHAR},
+                </if>
+                <if test="email!= null and email!= ''">
+                    user_email = #{email,jdbcType=VARCHAR} ,
+                </if>
+                <if test="status!= null and status!= ''">
+                    user_status = #{status,jdbcType=INTEGER},
+                </if>
+            </trim>
+        </set>
+        where user_id = #{id,jdbcType=INTEGER}
+    </update>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tb_user
+        where user_id = #{id,jdbcType=INTEGER}
+    </select>
+    
+    <select id="list" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tb_user
+        <where>
+        <trim suffixOverrides="and">
+            <if test="id != null and id!= ''">
+                user_id = #{id,jdbcType=INTEGER} and
+            </if>
+            <if test="name != null and name!= ''">
+                user_name = #{name,jdbcType=VARCHAR} and
+            </if>
+            <if test="password != null and password!= ''">
+                user_password = #{password,jdbcType=VARCHAR} and
+            </if>
+            <if test="sex != null and sex!= ''">
+                user_sex = #{sex,jdbcType=INTEGER} and
+            </if>
+            <if test="icon != null and icon!= ''">
+                user_icon = #{icon,jdbcType=VARCHAR} and
+            </if>
+            <if test="phone!= null and phone!= ''">
+                user_phone = #{phone,jdbcType=VARCHAR}  and
+            </if>
+            <if test="email!= null and email!= ''">
+                user_email = #{email,jdbcType=VARCHAR}   and
+            </if>
+            <if test="status!= null and status!= ''">
+                user_status = #{status,jdbcType=INTEGER}  and
+            </if>
+        </trim>
+        </where>
+    </select>
+
+    <select id="selectByName" parameterType="com.lytw13.demo.model.TbUser" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tb_user
+        where user_name = #{name,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByDept" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Dept_Column_List" />
+        from tb_user u inner join tb_dept_user du on u.user_id = du.user_id inner join tb_dept d on du.dept_id = d.dept_id
+        <where>
+            <if test="deptIds != null and deptIds.size > 0">
+                <foreach collection="deptIds" index="index" item="deptId" separator="or">
+                    d.dept_id=#{deptId,jdbcType=INTEGER}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="selectUserPermission" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+            select
+            <include refid="All_Column_List" />
+            FROM tb_user u INNER JOIN tb_user_role ur ON u.user_id = ur.user_id
+            INNER JOIN tb_role r ON ur.role_id = r.role_id
+            INNER JOIN tb_role_menu rm ON r.role_id = rm.role_id
+            INNER JOIN tb_menu m ON rm.menu_id = m.menu_id
+            <where>
+                <if test="id != null and id!=''">
+                        u.user_id=#{id,jdbcType=INTEGER}
+                </if>
+            </where>
+    </select>
+</mapper>

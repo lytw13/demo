@@ -1,0 +1,4 @@
+package com.lytw13.demo.controller;
+
+public class IndexController {
+}

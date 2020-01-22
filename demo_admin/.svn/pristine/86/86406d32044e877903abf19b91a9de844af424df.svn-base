@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>AdminLTE 2 | Starter</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- 图标-->
+    <link rel="shortcut icon" th:href="@{/img/favicon.ico}">
+    
+    <!-- 核心CSS-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+    
+    <!-- 默认样式表-->
+    <link rel="stylesheet" th:href="@{/css/AdminLTE.css}">
+    <link rel="stylesheet" th:href="@{/css/skins/skin-blue.min.css}">
+
+	<!-- 自定义样式-->
+    <link rel="stylesheet" th:href="@{/css/customer/custom.css}">
+   
+   
+    <!-- bootstrap-table css -->
+	<link rel="stylesheet" th:href="@{/css/form/bootstrap-table/bootstrap-table.min.css}">
+
+	<link rel="stylesheet" th:href="@{/css/ztree/metroStyle/metroStyle.css}" type="text/css">
+  </head>
+  
+  
+<body class="hold-transition skin-blue sidebar-mini">
+	<div class="wrapper">
+		<div th:insert="common/common :: top"></div>
+		<div th:insert="common/common :: sidebar"></div>
+			<div class="content-wrapper">
+		    <!-- Content Header (Page header) -->
+		    <section class="content-header">
+		      <h1><small>角色信息管理</small></h1>
+		      <ol class="breadcrumb">
+		        <li><i class="fa fa-dashboard"></i> 系统管理</li>
+		        <li class="active">角色管理</li>
+		      </ol>
+		    </section>
+          	
+				<section class="content">
+					<!-- 工具容器 -->
+				<div id="toolbar">
+				<!-- 按钮组 -->		
+					<button id="addButton" class="btn btn-primary"> <i class="fa fa-plus"></i>添加角色</button>
+					<button id="modifyButton" class="btn btn-primary"> <i class="fa fa-pencil"></i>修改角色信息</button>
+					<button id="deleteButton" class="btn btn-primary"><i class="fa fa-minus"></i>删除角色</button>
+				</div>
+				<!-- 工具容器结束 -->		
+		
+				<table id="myTable">
+				
+				</table>
+				</section>
+			</div>
+			
+			
+			<footer th:insert="common/common :: footer"></footer>
+			<div class="control-sidebar-bg"></div>
+			</div>
+	
+	 <!-- js基础文件-->
+    <script th:src="@{/js/jquery-3.4.1.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/app.min.js}"></script>
+    
+    
+     <!-- layer弹框插件 -->
+    <script th:src="@{/js/layer/layer.js}"></script>
+    
+    
+    <!-- bootstrap-table js -->
+	<script th:src="@{/js/form/bootstrap-table/bootstrap-table.min.js}"></script>
+	<script th:src="@{/js/form/bootstrap-table/bootstrap-table-zh-CN.min.js}"></script>
+	
+	
+	<!-- Excel导出 -->
+	<script type="text/javascript" th:src="@{/js/excel/FileSaver.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/excel/xlsx.core.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/excel/tableExport.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/excel/bootstrap-table-export.js}"></script>
+	
+	<script type="text/javascript" th:src="@{/js/customer/role.js}"></script>
+
+	<script th:src="@{/js/ztree/jquery.ztree.core.min.js}"></script>
+	<script th:src="@{/js/ztree/jquery.ztree.excheck.js}"></script>
+
+
+	<script type="text/javascript">
+
+		$(document).ready(function () {
+			$("#addButton").on("click", function() {
+				layer.open({
+					type: 2,
+					area: ['700px', '450px'],
+					fixed: false, //不固定
+					maxmin: true,
+					content: '/role/addPage'
+				});
+			});
+		})
+	</script>
+
+</body>
+</html>

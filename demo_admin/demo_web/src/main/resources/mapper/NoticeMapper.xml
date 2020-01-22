@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lytw13.demo.dao.NoticeMapper">
+    <resultMap id="BaseResultMap" type="com.lytw13.demo.model.TbNotice">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="content" jdbcType="VARCHAR" property="content" />
+        <result column="status" jdbcType="INTEGER" property="status" />
+        <result column="createUser" jdbcType="VARCHAR" property="createUser" />
+        <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id,name,content,status,createUser,createDate
+    </sql>
+
+
+    <insert id="insert" parameterType="com.lytw13.demo.model.TbNotice"  useGeneratedKeys="true" keyProperty="id">
+        insert into tb_notice
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">
+                id,
+            </if>
+            <if test="name != null and name != ''">
+                name,
+            </if>
+            <if test="content != null and content != ''">
+                content,
+            </if>
+            <if test="status != null and status != ''">
+                status,
+            </if>
+            <if test="createUser != null and createUser != ''">
+                createUser,
+            </if>
+                createDate
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="name != null and name != ''">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null and content != ''">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null and status != ''">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="createUser != null and createUser != ''">
+                #{createUser,jdbcType=VARCHAR},
+            </if>
+            CURRENT_TIMESTAMP,
+        </trim>
+    </insert>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_notice
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.lytw13.demo.model.TbNotice">
+        update tb_notice
+        <set>
+            <trim suffixOverrides=",">
+                <if test="name != null and name != ''">
+                    name = #{name,jdbcType=VARCHAR},
+                </if>
+                <if test="content != null and content != ''">
+                    content = #{content,jdbcType=VARCHAR},
+                </if>
+                <if test="status != null and status != ''">
+                    status = #{status,jdbcType=INTEGER},
+                </if>
+                <if test="createUser != null and createUser != ''">
+                    createUser = #{createUser,jdbcType=VARCHAR},
+                </if>
+                <if test="createDate != null and createDate != ''">
+                    type = #{createDate,jdbcType=TIMESTAMP},
+                </if>
+            </trim>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tb_notice
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="list" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from tb_notice
+    </select>
+    
+    
+</mapper>

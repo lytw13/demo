@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>用户管理</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- 图标-->
+    <link rel="shortcut icon" th:href="@{/img/favicon.ico}">
+    
+    <!-- 核心CSS-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+    
+    <!-- 默认样式表-->
+    <link rel="stylesheet" th:href="@{/css/AdminLTE.css}">
+    <link rel="stylesheet" th:href="@{/css/skins/skin-blue.min.css}">
+
+
+ 	<!-- 自定义样式-->
+    <link rel="stylesheet" th:href="@{/css/customer/custom.css}">
+   
+   
+   <!-- bootstrap-table css -->
+	<link rel="stylesheet" th:href="@{/css/form/bootstrap-table/bootstrap-table.min.css}">
+	
+	<!-- switchery css -->
+	<link rel="stylesheet" th:href="@{/css/form/switchery/switchery.min.css}">
+		
+	<link rel="stylesheet" th:href="@{/css/ztree/zTreeStyle.css}" type="text/css">
+  </head>
+  
+  
+<body class="hold-transition skin-blue sidebar-mini">
+	<div class="wrapper">
+		<div th:insert="common/common :: top"></div>
+		<div th:insert="common/common :: sidebar"></div>
+			<div class="content-wrapper">
+		    <!-- Content Header (Page header) -->
+		    <section class="content-header">
+		    <h1><small>用户信息管理</small></h1>
+		      <ol class="breadcrumb">
+		        <li><i class="fa fa-dashboard"></i> 系统管理</li>
+		        <li class="active">用户管理</li>
+		      </ol>
+		    </section>
+          	
+				<section class="content">
+				<!-- 查询框 -->	
+				<div>
+				<form id="form_submit">
+					<div class="search">
+						<label>用户id:</label>
+		                <input type="text" name="id" id="id">
+		              	<label>用户名称:</label>
+		                <input type="text" name="name" id="name">
+		             </div>
+		             <button id="searchButton" class="btn btn-primary" type="button">查询</button>
+		             <button type="reset" class="btn btn-primary">重置</button>
+		         </form>
+			</div>
+			<!-- 查询框结束 -->	
+			
+			<div>
+			
+<!--				<div class="leftContainer" id="left">
+					<div class="box-header">
+						<div class="box-title">
+							<i class="fa icon-grid"></i> 组织机构
+						</div>
+						<div class="box-tools pull-right">
+							<button type="button" class="btn btn-box-tool" id="btnExpand" title="展开"  onclick="expandAll()"><i class="fa fa-chevron-up"></i></button>
+							<button type="button" class="btn btn-box-tool" id="btnCollapse" title="折叠" style="display:none;"  onclick="collapseAll()"><i class="fa fa-chevron-down"></i></button>
+							<button type="button" class="btn btn-box-tool" id="btnRefresh" title="刷新部门"><i class="fa fa-refresh"></i></button>
+						</div>
+					</div>
+					<div>
+				   		<ul id="tree" class="ztree"></ul>
+				    </div>
+				</div>
+				<div class="rightContainer">-->
+				<!-- 工具容器 -->
+				<div id="toolbar">
+				<!-- 按钮组 -->
+					<a id="addButton" class="btn btn-primary" th:href="@{/user/addPage}"> <i class="fa fa-plus"></i>添加用户</a>
+					<button id="modifyButton" class="btn btn-primary"> <i class="fa fa-pencil"></i>修改用户信息</button>
+					<button id="deleteButton" class="btn btn-primary"><i class="fa fa-minus" ></i>删除用户</button>
+					<button id="addRoleButton" class="btn btn-primary"><i class="fa fa-pencil" ></i>添加角色</button>
+					<button type="button" id="myExportData" value="excel" class='btn btn-mini btn-primary'><i class="fa fa-download"></i>导出Excel</button>
+				</div>
+				<!-- 工具容器结束 -->	
+			
+			
+				<!--/*@thymesVar id="message" type=""*/-->
+				<span th:text="${message}"></span>
+				<!-- 表格开始 -->
+				<table id="myTable">
+					
+				</table>
+			<!-- 表格结束 -->
+			<!--</div>-->
+			</div>
+				</section>
+			</div>
+			
+			
+			<footer th:insert="common/common :: footer"></footer>
+			<div class="control-sidebar-bg"></div>
+</div>
+	
+	 <!-- js基础文件-->
+    <script th:src="@{/js/jquery-3.4.1.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/app.min.js}"></script>
+    
+     <!-- layer弹框插件 -->
+    <script th:src="@{/js/layer/layer.js}"></script>
+    
+    	<!-- bootstrap-table js -->
+	
+		<script th:src="@{/js/form/bootstrap-table/bootstrap-table.min.js}"></script>
+		<script th:src="@{/js/form/bootstrap-table/bootstrap-table-zh-CN.min.js}"></script>
+		
+		<!-- switchery js -->		
+		<script th:src="@{/js/form/switchery/switchery.min.js}"></script>
+		
+		<!-- js基础文件 -->
+	    <script th:src="@{/js/form/bootstrap-table/popper.min.js}"></script>
+	   <script th:src="@{/js/ztree/jquery.ztree.core.min.js}"></script>
+   
+   		<!-- Excel导出 -->
+   		
+   		<script type="text/javascript" th:src="@{/js/excel/FileSaver.min.js}"></script>
+   		<script type="text/javascript" th:src="@{/js/excel/xlsx.core.min.js}"></script>
+   		<script type="text/javascript" th:src="@{/js/excel/tableExport.min.js}"></script>
+   		<script type="text/javascript" th:src="@{/js/excel/bootstrap-table-export.js}"></script>
+   		
+    <script type="text/javascript">
+		//初始化表格
+		initTable();
+		//搜索按钮绑定表格
+		$("#searchButton").bind("click", initTable);
+		function initTable() {
+			//先销毁表格
+			$('#myTable').bootstrapTable('destroy');
+			$(document).ready(function () {
+				$('#myTable').bootstrapTable({
+					url: "/user/listUser",
+					toolbar: "#toolbar",
+					contentType: "application/x-www-form-urlencoded",
+					classes: "table table-bordered table-hover table-striped",  //添加表格斑马条 鼠标覆盖时效果 以及表格边框
+					locale: 'zh-CN', //页面使用中文
+					pageSize: 10, //默认的分页记录行数显示
+					pageList: [10, 20, 50], //可供选择的每页的行数（*）
+					showToggle: true,
+					showColumns: true,                  //是否显示所有的列
+					paginationPreText: '上一页',
+					paginationNextText: '下一页',
+					clickToSelect: true,
+					singleSelect: true,  //单选
+					formatLoadingMessage: '正在加载，请稍候。。。',
+					sidePagination: 'server', //服务端分页
+					pagination: true,  //开启分页
+					queryParamsType: '',
+					showExport: true, //是否显示导出按钮
+					exportDataType: "basic", //basic', 'all', 'selected'.
+					exportTypes: ['excel', 'xlsx'], //导出类型
+					//exportButton: $('#btn_export'), //为按钮btn_export 绑定导出事件 自定义导出按钮(可以不用)
+					exportOptions: {
+						//ignoreColumn: [0,0], //忽略某一列的索引
+						fileName: '数据导出', //文件名称设置
+						worksheetName: 'Sheet1', //表格工作区名称
+						tableName: '商品数据表',
+						excelstyles: ['background-color', 'color', 'font-size', 'font-weight']
+						//onMsoNumberFormat: DoOnMsoNumberFormat
+					},
+					queryParams: function (params) {   //分页参数
+						return {
+							pageSize: params.pageSize, // 页面大小
+							pageNumber: params.pageNumber, // 页码
+							id: $("#id").val(),
+							name: $("#name").val()
+						};
+					},
+					responseHandler: function (res) {
+						var nres = [];
+						nres.push({total: res.total, rows: res.list});
+						return nres[0];
+					},
+					columns: [{
+						field: 'Id',
+						checkbox: true
+					}, {
+						field: 'id',
+						title: '用户id',
+						visible: false
+					}, {
+						field: 'name',
+						title: '用户名'
+					}, {
+						field: 'sex',
+						title: '用户性别',
+						formatter: sexFormat
+					}, {
+						field: 'phone',
+						title: '用户手机号'
+					}, {
+						field: 'email',
+						title: '用户邮箱'
+
+					}, {
+						field: 'status',
+						title: '用户激活状态',
+						formatter: statusFormat
+					}, {
+						filed: 'createDate',
+						title: '用户创建时间',
+						sortable: true,  //字段排序
+						//获取日期列的值进行转换
+						formatter: function (value, row, index) {
+							return dateFormat(row.createDate)
+						}
+					}]
+				});
+
+
+				$("#modifyButton").click(function () {
+					var rows = $('#myTable').bootstrapTable("getSelections");
+					if (rows.length == 0) {
+						layer.alert("请先选中要编辑的数据");
+						return;
+					}
+					var param = rows[0].id;
+					window.location.href = "/user/modifyPage?id=" + param;
+				});
+
+				$("#deleteButton").click(function () {
+					var rows = $('#myTable').bootstrapTable("getSelections");
+					if (rows.length == 0) {
+						layer.alert("请先选中要删除的数据");
+						return;
+					}
+					//询问框
+
+					layer.confirm('确认要删除选中的数据吗？', {
+						btn: ['确定', '返回'] //按钮
+					}, function () {
+						var param = rows[0].id;
+						window.location.href = "/user/delete?id=" + param;
+					});
+
+					$("#addRoleButton").click(function () {
+						var rows = $('#myTable').bootstrapTable("getSelections");
+						if (rows.length == 0) {
+							layer.alert("请先选中要编辑的数据");
+							return;
+						}
+						var param = rows[0].id;
+						window.location.href = "/user/addRolePage?id=" + param;
+					});
+
+					var rows = $('#myTable').bootstrapTable("getSelections");
+					if (rows.length == 0) {
+						layer.alert("请先选中要删除的数据");
+						return;
+					}
+					//询问框
+					layer.confirm('确认要删除选中的数据吗？', {
+						btn: ['确定', '返回'] //按钮
+					}, function () {
+						var param = rows[0].id;
+						window.location.href = "/user/delete?id=" + param;
+					});
+				});
+
+			});
+		}
+			//转换日期格式(时间戳转换为datetime格式)
+			function dateFormat(cellval) {
+				if (cellval != null) {
+					var d = new Date(cellval);
+					var times=d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
+					return times;
+				} else {
+					return cellval;
+				}
+			};
+
+
+			//用户状态格式更改
+			function statusFormat(value, row, index){
+				if(row.status==1) {
+					return '<button type="button" class="btn btn-info btn-sm" style="margin-right:15px;border-radius:20px;">正常</button>';
+				} else {
+					return '<button type="button" class="btn btn-info btn-sm" style="margin-right:15px;border-radius:20px;">未激活</button>';
+				}
+			};
+
+			//性别转换
+			function sexFormat(value,row,index) {
+
+				if(row.sex==0) {
+					return '男';
+				}else {
+					return '女';
+				}
+			};
+
+	</script>
+</body>
+</html>

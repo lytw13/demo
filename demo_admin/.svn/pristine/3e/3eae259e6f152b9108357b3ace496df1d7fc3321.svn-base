@@ -1,0 +1,5 @@
+package com.lytw13.demo.dao;
+
+public interface UserRoleMapper  {
+
+}

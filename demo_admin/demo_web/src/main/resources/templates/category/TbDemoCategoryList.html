@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>AdminLTE 2 | Starter</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- 图标-->
+    <link rel="shortcut icon" th:href="@{/img/favicon.ico}">
+    
+    <!-- 核心CSS-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+    
+    <!-- 默认样式表-->
+    <link rel="stylesheet" th:href="@{/css/AdminLTE.css}">
+    <link rel="stylesheet" th:href="@{/css/skins/skin-blue.min.css}">
+
+	<!-- 自定义样式-->
+    <link rel="stylesheet" th:href="@{/css/customer/custom.css}">
+   
+   
+    <!-- bootstrap-table css -->
+	<link rel="stylesheet" th:href="@{/css/form/bootstrap-table/bootstrap-table.min.css}">
+  </head>
+  
+  
+<body class="hold-transition skin-blue sidebar-mini">
+	<div class="wrapper">
+		<div th:insert="common/common :: top"></div>
+		<div th:insert="common/common :: sidebar"></div>
+			<div class="content-wrapper">
+		    <!-- Content Header (Page header) -->
+		    <section class="content-header">
+		      <h1><small>分类管理</small></h1>
+		      <ol class="breadcrumb">
+		        <li><i class="fa fa-dashboard"></i> 商品管理</li>
+		        <li class="active">分类管理</li>
+		      </ol>
+		    </section>
+          	
+				<section class="content">
+					<!-- 工具容器 -->
+				<div id="toolbar">
+				<!-- 按钮组 -->		
+					<a id="addButton" class="btn btn-primary" th:href="@{/category/addPage}"> <i class="fa fa-plus"></i>新增分类</a>
+					<button id="expandBtn" class="btn btn-primary"> <i class="fa fa-pencil"></i>展开所有节点</button>
+					<button id="collapseButton" class="btn btn-primary" onclick="collapseAll()"><i class="fa fa-minus" ></i>关闭所有节点</button>
+				</div>
+				<!-- 工具容器结束 -->		
+		
+				<table id="myTable">
+				</table>
+				</section>
+			</div>
+			
+			
+			<footer th:insert="common/common :: footer"></footer>
+			<div class="control-sidebar-bg"></div>
+			</div>
+	
+	 <!-- js基础文件-->
+    <script th:src="@{/js/jquery-3.4.1.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/app.min.js}"></script>
+    
+    
+     <!-- layer弹框插件 -->
+    <script th:src="@{/js/layer/layer.js}"></script>
+    
+    
+    <!-- bootstrap-table js -->
+	<script th:src="@{/js/form/bootstrap-table/bootstrap-table.min.js}"></script>
+	<script th:src="@{/js/form/bootstrap-table/bootstrap-table-zh-CN.min.js}"></script>
+	
+	
+	<!-- Excel导出 -->
+	<script type="text/javascript" th:src="@{/js/excel/FileSaver.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/excel/xlsx.core.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/excel/tableExport.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/excel/bootstrap-table-export.js}"></script>
+	
+<!-- 表格树结构js -->
+	<script type="text/javascript" th:src="@{/js/jquery-treegrid/jquery.treegrid.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/bootstrap-treegrid/bootstrap-treegrid.js}"></script>		
+	
+		<script type="text/javascript">
+			$(document).ready(function() {
+				
+				window.operateEvents={
+				    //新增
+				    "click #btnAdd":function (e, value, row, index) {
+				    	var categoryId = row.categoryId;
+				    	window.location.href="/category/addPage?categoryId="+categoryId+"&categoryName="+row.categoryName;
+					}, 
+					//修改
+				    "click #btnEdit":function (e, value, row, index) {
+				    	window.location.href="/category/modifyPage?categoryId="+row.categoryId;
+					},
+					//删除
+				    "click #btnRemove":function (e, value, row, index) {
+				    	//询问框
+						layer.confirm('确认要删除选中的数据吗？', {
+						  btn: ['确定','返回'] //按钮
+						}, function(){
+				    	window.location.href="/category/delete?categoryId="+row.categoryId;
+						});
+					}
+			    };
+				$('#myTable').bootstrapTable({
+					url: "/category/list",
+					toolbar: "#toolbar",
+					classes: "table table-bordered table-hover table-striped",  //添加表格斑马条 鼠标覆盖时效果 以及表格边框
+					//这里是标志id  和 parentIdField有关系
+				    idField: 'categoryId',
+				    locale:'zh-CN', //页面使用中文
+					showToggle:true,
+					showColumns: true,                  //是否显示所有的列
+					formatLoadingMessage: '正在加载，请稍候。。。',
+					columns: [
+						{
+							 field: 'Id',
+							 checkbox: true,
+						},{
+					    field: 'categoryName',
+					    title: '分类名称'
+					  },{
+						 field: 'categoryStatus',
+						 formatter: statusFormat,
+						 title: '分类开启状态'
+					 },{
+						 title: '操作',
+						 events: operateEvents,
+						 formatter: operateFormat
+						
+					 }],
+						
+					  treeEnable: true,
+					  treeShowField: 'categoryName ',
+					  //指定父id列
+					  parentIdField: 'categoryPid',
+					  
+					  onLoadSuccess: function(data) {
+						  $('#myTable').treegrid({
+					          initialState: 'collapsed',
+					          treeColumn: 1,
+					          //expanderExpandedClass: 'glyphicon glyphicon-minus',
+					          //expanderCollapsedClass: 'glyphicon glyphicon-plus',
+					          onChange: function() {
+					        	  $('#myTable').bootstrapTable('resetWidth');
+					          }
+					        });
+					  }
+				});
+				
+				// 格式化按钮
+			    function operateFormat(value, row, index) {
+			        return [
+			            '<button type="button" id="btnAdd" class="btn btn-primary btn-sm" style="margin-right:15px;"><i class="fa fa-plus" ></i>&nbsp;新增</button>',
+			            '<button type="button" id="btnEdit" class="btn btn-primary btn-sm" style="margin-right:15px;"><i class="fa fa-pencil-square-o" ></i>&nbsp;修改</button>',
+			            '<button type="button" id="btnRemove" class="btn btn-danger btn-sm" style="margin-right:15px;"><i class="fa fa-trash-o"></i>&nbsp;删除</button>'
+			        ].join('');
+			    };
+			  //用户状态格式更改
+				function statusFormat(value, row, index){
+					if(row.categoryStatus==1) {
+						return '<button type="button" class="btn btn-info btn-sm" style="margin-right:15px;border-radius:20px;">正常</button>';
+					} else {
+						return '<button type="button" class="btn btn-info btn-sm" style="margin-right:15px;border-radius:20px;">未激活</button>';
+					}
+				};
+			   $("#expandBtn").on("click",function(){
+				   $('#myTable').treegrid('expandAll');
+			   });
+			});
+			 function collapseAll() {
+			    	$('#myTable').treegrid('collapseAll');
+			    };
+		</script>
+</body>
+</html>

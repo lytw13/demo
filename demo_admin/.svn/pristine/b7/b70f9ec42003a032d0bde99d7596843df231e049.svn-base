@@ -1,0 +1,141 @@
+package com.lytw13.demo.service.impl;
+
+import com.alibaba.fastjson.JSONObject;
+import com.lytw13.demo.dao.UserMapper;
+import com.lytw13.demo.model.BaseResult;
+import com.lytw13.demo.model.TbUser;
+import com.lytw13.demo.service.UserService;
+import com.lytw13.demo.utils.ResponseResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RestController
+public class UserServiceImpl implements UserService {
+    @Autowired
+    RabbitTemplate rabbitTemplate;
+    @Autowired
+    UserMapper userMapper;
+    @Autowired
+    StringRedisTemplate redisTemplate;
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Override
+    public BaseResult regist(@RequestBody TbUser user) {
+        Integer result = userMapper.insert(user);
+        if(result<=0) {
+            return new ResponseResult().setResultFail("注册失败");
+        }
+        //发送邮件到rabbitmq
+        JSONObject root = new JSONObject();
+        JSONObject header = new JSONObject();
+        JSONObject main = new JSONObject();
+        main.put("email",user.getEmail());
+        header.put("type","email");
+        root.put("header",header);
+        root.put("main",main);
+        logger.info("####会员服务开始推送消息到消息服务平台####json:{}", root);
+        rabbitTemplate.convertAndSend("email.direct","email.direct",root.toString());
+        logger.info("####会员服务完成推送消息到消息服务平台####json:{}", root);
+        return new ResponseResult().setResultSuccess(root);
+    }
+
+    @Override
+    public BaseResult login(@RequestBody TbUser user) {
+        //1. 接受消息，判断是否为空
+//        if(user.getName().trim().isEmpty()|| user.getPassword().trim().isEmpty()) {
+//            return new ResponseResult().setResultFail("用户名或密码为空");
+//        }
+        //2 在数据库中或者redis查找是否正确
+        TbUser tbUser = userMapper.selectByName(user.getName());
+        if (tbUser == null) {
+            return new ResponseResult().setResultFail("用户名不存在");
+        }
+        redisTemplate.opsForValue().set("user"+tbUser.getId(),tbUser.getId()+"");
+        logger.info("将{}存到redis，数据：{}","user"+tbUser.getId(),tbUser.getId());
+        return new ResponseResult().setResultSuccess(tbUser);
+    }
+
+    public BaseResult  getByToken(@PathVariable("token") String token) {
+        String s = redisTemplate.opsForValue().get(token);
+        if(s.isEmpty()) {
+            return new ResponseResult().setResultFail("token不存在或者已经失效");
+        }
+        Integer id = Integer.parseInt(s);
+        TbUser tbUser = userMapper.selectByPrimaryKey(id);
+        if (tbUser == null){
+            return new ResponseResult().setResultFail("未查到该用户信息");
+        }
+        return new ResponseResult().setResultSuccess(tbUser);
+    }
+    @Override
+    public BaseResult get(@PathVariable("id") Integer id) {
+        TbUser user = userMapper.selectByPrimaryKey(id);
+        if(user==null) {
+            return new ResponseResult().setResultFail("未查到该用户信息");
+        }
+        return new ResponseResult().setResultSuccess(user);
+    }
+    @Override
+    public BaseResult getByName(@PathVariable("name") String name) {
+        TbUser user = userMapper.selectByName(name);
+        if(user==null) {
+            return new ResponseResult().setResultFail("fail");
+        }
+        return new ResponseResult().setResultSuccess(user);
+    }
+
+    @Override
+    public BaseResult list() {
+        List<TbUser> userList = userMapper.list();
+        if(userList.size() == 0) {
+            return new ResponseResult().setResultFail("没有查到相应结果");
+        }
+        return new ResponseResult().setResultSuccess(userList);
+    }
+
+    @Override
+    public BaseResult listByDept(List deptIds) {
+        List<TbUser> userList = userMapper.selectByDept(deptIds);
+        if(userList.size() == 0) {
+            return new ResponseResult().setResultFail("没有查到相应结果");
+        }
+        return new ResponseResult().setResultSuccess(userList);
+    }
+
+    @Override
+    public BaseResult delete(@PathVariable("id") Integer id) {
+        Integer result = userMapper.deleteByPrimaryKey(id);
+        if(result == 0) {
+            return new ResponseResult().setResultFail("删除失败");
+        }
+        return new ResponseResult().setResultSuccess("删除成功");
+    }
+
+    @Override
+    public BaseResult update(@RequestBody TbUser tbUser) {
+        Integer result =  userMapper.updateByPrimaryKeySelective(tbUser);
+        if(result == 0) {
+            return new ResponseResult().setResultFail("更新失败");
+        }
+        return new ResponseResult().setResultSuccess("更新成功");
+    }
+
+    @Override
+    public BaseResult insert(@RequestBody TbUser tbUser) {
+        Integer result = userMapper.insert(tbUser);
+        if(result<=0) {
+            return new ResponseResult().setResultFail("注册失败");
+        };
+        return new ResponseResult().setResultSuccess(tbUser);
+    }
+
+}

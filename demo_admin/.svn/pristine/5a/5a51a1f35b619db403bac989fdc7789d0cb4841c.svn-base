@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>AdminLTE 2 | Starter</title>
+<!-- Tell the browser to be responsive to screen width -->
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+	name="viewport">
+<!-- 图标-->
+<link rel="shortcut icon" th:href="@{/img/favicon.ico}">
+
+<!-- 核心CSS-->
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+
+<!-- 默认样式表-->
+<link rel="stylesheet" th:href="@{/css/AdminLTE.css}">
+<link rel="stylesheet" th:href="@{/css/skins/skin-blue.min.css}">
+
+<!-- 自定义样式-->
+<link rel="stylesheet" th:href="@{/css/customer/custom.css}">
+
+
+<!-- bootstrap-table css -->
+<link rel="stylesheet"
+	th:href="@{/css/form/bootstrap-table/bootstrap-table.min.css}">
+
+<!-- switchery css -->
+<link rel="stylesheet"
+	th:href="@{/css/form/switchery/switchery.min.css}">
+
+<!-- ztree css -->
+<link rel="stylesheet" th:href="@{/css/ztree/zTreeStyle.css}"
+	type="text/css">
+</head>
+
+
+<body class="hold-transition skin-blue sidebar-mini">
+	<div class="wrapper">
+		<div th:insert="common/common :: top"></div>
+		<div th:insert="common/common :: sidebar"></div>
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<small>用户管理</small>
+				<ol class="breadcrumb">
+					<li><a href="#"><i class="fa fa-dashboard"></i>用户管理</a></li>
+					<li class="active">添加用户</li>
+				</ol>
+			</section>
+
+			<section class="content">
+				<div class="main-content">
+					<form id="myForm" class="form-horizontal" th:action="@{/user/add}" method="post">
+						<div class="row">
+		                <div class="col-sm-6">
+		                    <div class="form-group">
+		                        <label class="col-sm-4 control-label"><span style="color: red; ">*</span>用户名称：</label>
+		                        <div class="col-sm-8">
+		                            <input id="name" name="name" placeholder="请输入角色名称" class="form-control" type="text">
+		                        </div>
+		                    </div>
+		                </div>
+		              <div class="col-sm-6">
+		                    <div class="form-group">
+		                        <label class="col-sm-4 control-label"><span style="color: red; ">*</span>用户密码：</label>
+		                        <div class="col-sm-8">
+		                            <input id="password" name="password"  class="form-control" type="password">
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+		            
+		            
+		               <div class="row">
+		                <div class="col-sm-6">
+		                    <div class="form-group">
+		                        <label class="col-sm-4 control-label"><span style="color: red; ">*</span>用户手机号：</label>
+		                        <div class="col-sm-8">
+		                            <input id="phone" name="phone"  class="form-control" type="text">
+		                        </div>
+		                    </div>
+		                </div>
+		              <div class="col-sm-6">
+		                    <div class="form-group">
+		                        <label class="col-sm-4 control-label"><span style="color: red; ">*</span>用户邮箱：</label>
+		                        <div class="col-sm-8">
+		                            <input id="email" name="email"  class="form-control" type="text">
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+		            
+		            
+		             <div class="row">
+		                <div class="col-sm-6">
+		                    <div class="form-group">
+		                        <label class="col-sm-4 control-label"><span style="color: red; ">*</span>用户所属部门：</label>
+		                        <div class="col-sm-8">
+		                        <input id="deptId" name="deptId"  class="form-control" type="hidden">
+		                            <input id="deptName" name="deptName"  class="form-control" type="text" data-toggle="modal" data-target="#myModal">
+		                        </div>
+		                    </div>
+		                </div>
+		                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">用户性别：</label>
+                        <div class="col-sm-8">
+                            <select name="userSex" class="form-control m-b">
+				                <option value="0">男</option>
+				                <option value="1">女</option>
+				            </select>
+                        </div>
+                    </div>
+                	</div>
+		            </div>
+		            
+		            
+		            <div class="row">
+		              <div class="col-sm-6">
+		                    <div class="form-group">
+		                        <label class="col-sm-4 control-label"><span style="color: red; ">*</span>用户激活状态：</label>
+		                        <div class="col-sm-8">
+		                            <label class="toggle-switch switch-solid">
+			                            <input type="checkbox" name="ckStatus" class="js-switch" checked>
+			                            <span></span>
+			                        </label>
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+		            
+		            
+		             <div class="row">
+				        <div class="col-sm-offset-5 col-sm-10">
+				            <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-check"></i>保 存</button>&nbsp;
+				            <button type="button" class="btn btn-sm btn-danger" onclick="javascript:history.back(-1);"><i class="fa fa-reply-all"></i>返回 </button>
+				        </div>
+				    </div>
+					</form>
+				</div>
+			</section>
+		</div>
+
+
+		<footer th:insert="common/common :: footer"></footer>
+		<div class="control-sidebar-bg"></div>
+	</div>
+
+	<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">请选择部门</h4>
+				</div>
+				<div class="modal-body">
+					<ul id="tree" class="ztree"></ul>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" id="confirm">确定</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+
+
+
+	<!-- js基础文件-->
+	<script th:src="@{/js/jquery-3.4.1.js}"></script>
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/app.min.js}"></script>
+
+
+
+	<!-- switchery js -->
+	<script th:src="@{/js/form/switchery/switchery.min.js}"></script>
+
+	<!-- 表单验证插件 -->
+	<script th:src="@{/js/form/formValidation/jquery.validate.min.js}"></script>
+	<script th:src="@{/js/form/formValidation/messages_zh.min.js}"></script>
+
+	<!-- ztree插件 -->
+	<script th:src="@{/js/ztree/jquery.ztree.core.min.js}"></script>
+
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			//switchery插件使用
+			var elem = document.querySelector('.js-switch');
+			var init = new Switchery(elem);
+		})
+	</script>
+
+	<!-- 表单验证 -->
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+
+							var zTree;
+
+							var deptIds = [];
+							var setting = {
+								view : {
+									dblClickExpand : false, //双击展开列表
+									showLine : true, //连接线是否显示
+									selectedMulti : false, //是否可以多选
+									autoCancelSelected : false
+								//自动取消选中
+								},
+								data : {
+									simpleData : {
+										enable : true,
+										idKey : "id",
+										pIdKey : "pid",
+										rootPId : 0
+									}
+								},
+								callback : {
+									beforeClick : function(treeId, treeNode) {
+										var zTree = $.fn.zTree
+												.getZTreeObj("tree");
+
+										$("#confirm").on("click", function() {
+											$("#deptName").val(treeNode.name);
+											$("#deptId").val(treeNode.id);
+											$("#myModal").modal('hide');
+										});
+									}
+								}
+							};
+
+							//部门树结构
+							$.getJSON("/dept/listDept", function(zNodes) {
+								var t = $("#tree");
+								t = $.fn.zTree.init(t, setting, zNodes);
+								var zTree = $.fn.zTree.getZTreeObj("tree");
+								zTree.selectNode(zTree
+										.getNodeByParam("id", 101));
+							});
+
+							//自定义手机号码验证  
+							jQuery.validator
+									.addMethod(
+											"isMobile",
+											function(value, element) {
+												var length = value.length;
+												var mobile = /^(13[0-9]{9})|(15[0-9]{9})|(16[0-9]{9})|(17[0-9]{9})|(18[0-9]{9})|(19[0-9]{9})$/;
+												return this.optional(element)
+														|| (length == 11 && mobile
+																.test(value));
+											}, "请输入正确的手机号");
+
+							// 在键盘按下并释放及提交后验证提交表单
+							$("#myForm").validate({
+								rules : {
+									name : {
+										required : true,
+										rangelength : [ 4, 20 ]
+									},
+									password : {
+										required : true,
+										rangelength : [ 6, 20 ]
+									},
+									phone : {
+										required : true,
+										minlength : 11,
+										maxlength : 12,
+										isMobile : true
+									},
+									email : {
+										required : true,
+										email : true
+									}
+								},
+								messages : {
+									name : {
+										required : "请输入用户名",
+										rangelength : "用户名应为4-20位"
+									},
+									password : {
+										required : "请输入密码",
+										rangelength : "密码长度应在6-20位"
+									},
+									phone : {
+										required : "请输入手机号",
+										minlength : "长度应为11位",
+										maxlength : "长度应为11位",
+										isMobile : "请输入正确的手机号"
+									},
+									email : {
+										required : "请输入注册邮箱",
+										email : "请输入一个正确的邮箱"
+									}
+
+								}
+							});
+						})
+	</script>
+</body>
+</html>

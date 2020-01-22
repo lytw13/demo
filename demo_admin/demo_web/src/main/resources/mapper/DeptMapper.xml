@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lytw13.demo.dao.DeptMapper">
+    <resultMap id="BaseResultMap" type="com.lytw13.demo.model.TbDept">
+        <id column="dept_id" jdbcType="INTEGER" property="id" />
+        <result column="dept_name" jdbcType="VARCHAR" property="name" />
+        <result column="dept_sequence" jdbcType="INTEGER" property="sequence" />
+        <result column="dept_leader" jdbcType="VARCHAR" property="leader" />
+        <result column="dept_status" jdbcType="INTEGER" property="status" />
+        <result column="dept_pid" jdbcType="INTEGER" property="pid" />
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+    dept_id,dept_name,dept_sequence,dept_leader,dept_status,dept_pid
+    </sql>
+    <sql id="All_Column_List">
+    u.user_id,u.user_name,u.user_password,u.user_sex,u.user_icon,u.user_phone,u.user_email,u.user_status,u.user_createDate,
+    d.dept_id,d.dept_name,d.dept_sequence,d.dept_leader,d.dept_status,d.dept_pid
+    </sql>
+
+    <select id="list" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tb_dept
+    </select>
+
+    <select id="listUserById" parameterType="java.util.List" resultMap="BaseResultMap">
+        select
+        <include refid="All_Column_List" />
+        from tb_user u inner join tb_user_dept du on u.user_id = du.user_id inner join tb_dept d on du.dept_id = d.dept_id
+        <where>
+            <if test="deptIds != null and deptIds.size > 0">
+                <foreach collection="deptIds" index="index" item="deptId" separator="or">
+                    d.dept_id=#{deptId,jdbcType=INTEGER}
+                </foreach>
+            </if>
+        </where>
+    </select>
+</mapper>

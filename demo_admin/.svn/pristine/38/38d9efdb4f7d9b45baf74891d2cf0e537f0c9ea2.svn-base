@@ -1,0 +1,6 @@
+package com.lytw13.demo.adapter;
+
+
+public interface MessageAdapter {
+    void sendMessage(String to);
+}

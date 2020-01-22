@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div>
+		尊敬的用户<span th:text="${uname}"></span>,您好！欢迎您加入lytw13网站！
+	<br>
+		您的lytw13账号已经成功创建，请点击<a th:href="@{localhost:8080/user/activeUser(userName=${userName},userStatus=1)}">这里</a>激活账号。
+	</div>
+</body>
+</html>

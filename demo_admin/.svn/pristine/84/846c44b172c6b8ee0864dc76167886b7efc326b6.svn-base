@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>AdminLTE 2 | Starter</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- 图标-->
+    <link rel="shortcut icon" th:href="@{/img/favicon.ico}">
+    
+    <!-- 核心CSS-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+    
+    <!-- 默认样式表-->
+    <link rel="stylesheet" th:href="@{/css/AdminLTE.css}">
+    <link rel="stylesheet" th:href="@{/css/skins/skin-blue.min.css}">
+
+	<!-- 自定义样式-->
+    <link rel="stylesheet" th:href="@{/css/customer/custom.css}">
+   
+   
+    <!-- bootstrap-table css -->
+	<link rel="stylesheet" th:href="@{/css/form/bootstrap-table/bootstrap-table.min.css}">
+  </head>
+  
+  
+<body class="hold-transition skin-blue sidebar-mini">
+	<div class="wrapper">
+		<div th:insert="common/common :: top"></div>
+		<div th:insert="common/common :: sidebar"></div>
+			<div class="content-wrapper">
+		    <!-- Content Header (Page header) -->
+		    <section class="content-header">
+		      <h1><small>商品管理</small></h1>
+		      <ol class="breadcrumb">
+		        <li><i class="fa fa-dashboard"></i> 商品管理</li>
+		        <li class="active">商品管理</li>
+		      </ol>
+		    </section>
+          	
+				<section class="content">
+				<!-- 查询框 -->	
+				<div class="search_form">
+				<form id="form_submit">
+					<div class="search">
+						<label>商品id:</label>
+		                <input type="text" name="gid" id="gid">
+		              	<label>商品名称:</label>
+		                <input type="text" name="gname" id="gname">
+		                <label>品牌名称:</label>
+		                <input type="text" name="brandName" id="brandName">
+		             </div>
+		             <button id="searchButton" class="btn btn-primary">查询</button>	
+		             <button type="reset" class="btn btn-primary">重置</button>
+		         </form>
+			</div>
+			<!-- 查询框结束 -->	
+					<!-- 工具容器 -->
+				<div id="toolbar">
+				<!-- 按钮组 -->		
+					<a id="addButton" class="btn btn-primary" th:href="@{/goods/addPage}"> <i class="fa fa-plus"></i>新增商品</a>
+					<button id="modifyButton" class="btn btn-primary"> <i class="fa fa-pencil"></i>修改商品</button>
+					<button id="deleteButton" class="btn btn-primary"><i class="fa fa-minus"></i>删除商品</button>
+				</div>
+				<!-- 工具容器结束 -->		
+		
+				<table id="myTable">
+				</table>
+				</section>
+			</div>
+			
+			
+			<footer th:insert="common/common :: footer"></footer>
+			<div class="control-sidebar-bg"></div>
+			</div>
+	
+	 <!-- js基础文件-->
+    <script th:src="@{/js/jquery-3.4.1.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/app.min.js}"></script>
+    
+    
+     <!-- layer弹框插件 -->
+    <script th:src="@{/js/layer/layer.js}"></script>
+    
+    
+    <!-- bootstrap-table js -->
+	<script th:src="@{/js/form/bootstrap-table/bootstrap-table.min.js}"></script>
+	<script th:src="@{/js/form/bootstrap-table/bootstrap-table-zh-CN.min.js}"></script>
+	
+	
+	<!-- Excel导出 -->
+	<script type="text/javascript" th:src="@{/js/excel/FileSaver.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/excel/xlsx.core.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/excel/tableExport.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/excel/bootstrap-table-export.js}"></script>
+	
+	<script type="text/javascript">
+	/**
+	 * 
+	 */
+
+	$(document).ready(function() {
+				
+			//转换日期格式(时间戳转换为datetime格式)
+	        function dateFormat(cellval) {
+	            if (cellval != null) {
+	                var d = new Date(cellval);
+	                var times=d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
+	                return times;
+	            } else {
+	                return cellval;
+	            }
+			};
+	    	 $('#myTable').bootstrapTable('destroy');
+
+			$('#myTable').bootstrapTable({
+				url: "/goods/list",
+				toolbar: "#toolbar",
+				classes: "table table-bordered table-hover table-striped",  //添加表格斑马条 鼠标覆盖时效果 以及表格边框
+				checkbox: true,
+				sidePagination: 'server', //服务端分页
+				queryParamsType: '',
+			    pagination: true,  //开启分页
+			    locale:'zh-CN', //页面使用中文
+			    sortable: true,  //字段排序
+			    pageSize: 10, //默认的分页记录行数显示
+			    pageList: [10,20,50], //可供选择的每页的行数（*）
+				showToggle:true,
+				showColumns: true,                  //是否显示所有的列
+				paginationPreText: '上一页',
+				paginationNextText: '下一页',
+				singleSelect: true,  //单选
+				formatLoadingMessage: '正在加载，请稍候。。。',
+				 showExport: true, //是否显示导出按钮
+			        exportDataType: "basic", //basic', 'all', 'selected'.
+			        exportTypes:['excel','xlsx'], //导出类型
+			        //exportButton: $('#myExportData'), //为按钮btn_export 绑定导出事件 自定义导出按钮(可以不用)
+			        exportOptions:{
+			        //ignoreColumn: [0,0], //忽略某一列的索引
+			        fileName: '数据导出'
+			        //onMsoNumberFormat: DoOnMsoNumberFormat
+			        },
+			        queryParams: function (params) {   //分页参数
+			            return {
+			            	pageSize : params.pageSize, // 页面大小
+			    	        pageNumber : params.pageNumber, // 页码
+			    	        gid: $("#gid").val(),
+			    	        gname: $("#gname").val(),
+			    	        brandName: $("#brandName").val()
+			            };
+			        },
+			        responseHandler:function(res){
+			            var nres = [];
+			            nres.push({total:res.total,rows:res.list});
+			            return nres[0];
+			        },
+				columns: [{
+				    field: 'Id',
+				    checkbox: true
+				  },{
+				    field: 'gid',
+				    title: '商品id',
+				    visible: false
+				  }, {
+				    field: 'gname',
+				    title: '商品名',
+				    width:100,
+				    sortable: true
+				  },{
+					 field: 'gprice',
+					 title: '商品价格',
+					 width:100,
+					 sortable: true
+				 },{
+					 field: 'gtotal',
+					 title: '商品数量',
+					 width:100
+				 }]
+			    
+			});
+			
+		});
+		$("#modifyButton").click(function() {
+				var rows = $('#myTable').bootstrapTable("getSelections");
+				if(rows.length == 0) {
+					layer.alert("请先选中要编辑的数据");
+					return;
+				}
+				var param = rows[0].gid;
+				window.location.href="/goods/modify?gid="+param;
+			});
+			
+			
+			$("#deleteButton").click(function() {
+				var rows = $('#myTable').bootstrapTable("getSelections");
+				if(rows.length == 0) {
+					layer.alert("请先选中要删除的数据");
+					return;
+				}
+				layer.confirm('确认要删除选中的数据吗？', {
+					  btn: ['确定','返回'] //按钮
+				}, function(){
+				window.location.href="/goods/delete?gid="+rows[0].gid;
+				});
+			});
+			
+			 $("#searchButton").on("click",function() {
+				  $("#myTable").bootstrapTable('refresh');
+			  });
+			  
+	</script>
+</body>
+</html>

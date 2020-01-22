@@ -1,0 +1,55 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: 123456
+    url: jdbc:mysql://localhost:3306/db_admin?serverTimezone=Asia/Shanghai
+    username: root
+
+#邮箱相关设置
+  mail:
+    default-encoding: utf-8
+    host: smtp.163.com
+    password: lytw1315
+    subject: 您的账号已注册，请点击链接进行激活。
+    username: lytw1315@163.com
+
+#thymeleaf配置
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+### redis相关配置
+  redis:
+    host: 47.95.141.83
+    port: 6379
+    password:
+### rabbitmq配置
+  rabbitmq:
+    host: 47.95.141.83
+    username: guest
+    password: guest
+    port: 5672
+
+###开启i18n
+  messages:
+    basename: i18n.login
+###日志相关
+logging:
+  level:
+    com:
+      lytw13:
+        demo:
+          dao: debug
+
+### mybatis xml位置
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+### 分页
+pagehelper:
+  helperDialect: mysql
+
+
+
+

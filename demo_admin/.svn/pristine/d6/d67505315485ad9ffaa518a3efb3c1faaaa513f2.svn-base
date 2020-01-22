@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>AdminLTE 2 | Starter</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- 图标-->
+    <link rel="shortcut icon" th:href="@{/img/favicon.ico}">
+    
+    <!-- 核心CSS-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+    
+    <!-- 默认样式表-->
+    <link rel="stylesheet" th:href="@{/css/AdminLTE.css}">
+    <link rel="stylesheet" th:href="@{/css/skins/skin-blue.min.css}">
+
+	<!-- 自定义样式-->
+    <link rel="stylesheet" th:href="@{/css/customer/custom.css}">
+   
+   
+   <!-- bootstrap-table css -->
+	<link rel="stylesheet" th:href="@{/css/form/bootstrap-table/bootstrap-table.min.css}">
+	
+	<!-- switchery css -->
+	<link rel="stylesheet" th:href="@{/css/form/switchery/switchery.min.css}">
+  </head>
+  
+  
+<body class="hold-transition skin-blue sidebar-mini">
+	<div class="wrapper">
+		<div th:insert="common/common :: top"></div>
+		<div th:insert="common/common :: sidebar"></div>
+			<div class="content-wrapper">
+		    <!-- Content Header (Page header) -->
+		    <section class="content-header">
+		        <small>用户管理</small>
+		      <ol class="breadcrumb">
+		        <li><a href="#"><i class="fa fa-dashboard"></i>用户管理</a></li>
+		        <li class="active">用户信息修改</li>
+		      </ol>
+		    </section>
+          	
+				<section class="content">
+							  <div class="main-content">
+        <form id="myForm" class="form-horizontal" th:action="@{/user/updateUser}" method="post">
+            <h4 class="form-header h4">基本信息</h4>
+             <input name="id" type="hidden" th:value="${user.id}">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"><span style="color: red; ">*</span>登录账号：</label>
+                        <div class="col-sm-8">
+                            <input name="name" placeholder="请输入登录账号" class="form-control" type="text" th:value="${user.name}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"><span style="color: red; ">*</span>登录密码：</label>
+                        <div class="col-sm-8">
+                            <input name="password" placeholder="请输入登录密码" class="form-control" type="password" th:value="${user.password}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"><span style="color: red; ">*</span>手机号码：</label>
+                        <div class="col-sm-8">
+                            <input name="phone" placeholder="请输入手机号码" class="form-control" type="text" th:value="${user.phone}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"><span style="color: red; ">*</span>邮箱：</label>
+                        <div class="col-sm-8">
+                            <input name="email" class="form-control email" type="email" placeholder="请输入邮箱" th:value="${user.email}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">用户性别：</label>
+                        <div class="col-sm-8">
+                            <select name="sex" class="form-control m-b">
+				                <option value="0">男</option>
+				                <option value="1">女</option>
+				            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"><span style="color: red; ">*</span>用户状态：</label>
+                        <div class="col-sm-8">
+                            <label class="toggle-switch switch-solid">
+	                            <input type="checkbox" name="ckStatus" class="js-switch" checked>
+	                            <span></span>
+	                        </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div class="row">
+		        <div class="col-sm-offset-5 col-sm-10">
+		            <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-check"></i>保 存</button>&nbsp;
+		            <button type="button" class="btn btn-sm btn-danger" onclick="javascript:history.back(-1);"><i class="fa fa-reply-all"></i>返回</button>
+		        </div>
+		    </div>
+            
+        </form>
+    </div>
+				</section>
+			</div>
+			
+			
+			<footer th:insert="common/common :: footer"></footer>
+			<div class="control-sidebar-bg"></div>
+			</div>
+	
+	 <!-- js基础文件-->
+    <script th:src="@{/js/jquery-3.4.1.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/app.min.js}"></script>
+    
+    
+    
+    <!-- switchery js -->		
+	<script th:src="@{/js/form/switchery/switchery.min.js}"></script>
+	
+	<!-- 表单验证插件 -->     
+    <script th:src="@{/js/form/formValidation/jquery.validate.min.js}"></script>
+    <script th:src="@{/js/form/formValidation/messages_zh.min.js}"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		//switchery插件使用
+		   var elem = document.querySelector('.js-switch');
+		   var init = new Switchery(elem);
+	})
+	</script>
+	
+	<!-- 表单验证 -->
+	<script type="text/javascript">
+	$(document).ready(function() {
+    	// 在键盘按下并释放及提交后验证提交表单
+    	  $("#myForm").validate({
+    		    rules: {
+    		      name: {
+    		        required: true,
+    		        rangelength: [4,20]
+    		      },
+    		      password: {
+    		        required: true,
+    		        rangelength: [6,20]
+    		      },
+    		      phone: {
+    		    	  required: true,
+    		    	  rangelength: [7,20]
+    		      },
+    		      email: {
+    		    	  required: true,
+    		          email: true
+    		      }
+    		    },
+    		    messages: {
+    		    	name: {
+    		        required: "请输入用户名",
+    		        rangelength: "用户名应为4-20位"
+    		      },
+    		      password: {
+    		        required: "请输入密码",
+    		        rangelength: "密码长度应在6-20位"
+    		      },
+    		      phone: {
+      		        required: "请输入手机号",
+      		        rangelength: "长度应在7-20位"
+      		      },
+    		      email: {
+    		    	  required: "请输入注册邮箱",
+    		    	  email: "请输入一个正确的邮箱"
+    		      }
+    		   
+    		    }
+    		});
+    	})
+	</script>		
+		
+</body>
+</html>

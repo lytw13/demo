@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lytw13.demo.dao.UserRoleMapper">
+    <resultMap id="BaseResultMap" type="com.lytw13.demo.model.TbUserRole">
+        <id column="user_role_id" jdbcType="INTEGER" property="id" />
+        <id column="user_id" jdbcType="INTEGER" property="uid" />
+        <id column="role_id" jdbcType="INTEGER" property="rid" />
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+        user_role_id,user_id,role_id
+    </sql>
+
+    <insert id="insert" parameterType="com.lytw13.demo.model.TbUserRole">
+        insert into tb_user_role values(null,#{uid},#{rid})
+    </insert>
+</mapper>

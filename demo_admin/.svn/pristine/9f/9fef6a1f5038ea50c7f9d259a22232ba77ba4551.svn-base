@@ -1,0 +1,10 @@
+package com.lytw13.demo.adapter;
+
+
+import com.lytw13.demo.model.TbUser;
+
+import java.util.Map;
+
+public interface MessageAdapter {
+    void sendMessage(TbUser user);
+}

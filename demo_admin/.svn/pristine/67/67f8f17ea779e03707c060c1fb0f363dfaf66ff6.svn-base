@@ -1,0 +1,112 @@
+package com.lytw13.demo.controller;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.lytw13.demo.model.BaseResult;
+import com.lytw13.demo.model.PageVo;
+import com.lytw13.demo.model.TbUser;
+import com.lytw13.demo.model.TbUserDept;
+import com.lytw13.demo.service.UserDeptService;
+import com.lytw13.demo.service.UserService;
+import com.lytw13.demo.utils.MapAndModelConverge;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+
+@Controller
+@RequestMapping("/user")
+public class UserController {
+
+    @Autowired
+    UserService userService;
+    @Autowired
+    UserDeptService userDeptService;
+
+    @GetMapping(value="listPage")
+    public String listPage() {
+        return "user/userList";
+    }
+
+    @GetMapping(value="addPage")
+    public String addPage() {
+        return "user/userAddForm";
+    }
+
+    @GetMapping("modifyPage")
+    public String modifyPage(Model model,Integer id) {
+        BaseResult result = userService.get(id);
+        if(result.getResultCode() != 200) {
+            model.addAttribute("message",result.getResultMsg());
+        }
+        LinkedHashMap user = (LinkedHashMap) result.getResultData();
+        model.addAttribute("user",user);
+        return "/user/userModifyForm";
+    }
+
+
+    @GetMapping(value="listUser")
+    @ResponseBody
+    public PageInfo<TbUser> list(Model model,PageVo pageVo,TbUser tbUser) {
+        PageHelper.startPage(pageVo.getPageNumber(),pageVo.getPageSize());
+        BaseResult result = userService.list();
+        if(result.getResultCode() != 200) {
+            model.addAttribute("message",result.getResultMsg());
+        }
+        ArrayList resultData = (ArrayList) result.getResultData();
+        PageInfo<TbUser> pageInfo = new PageInfo<TbUser>(resultData);
+        return pageInfo;
+    }
+
+    @PostMapping("add")
+    @Transactional
+    public String add(Model model, TbUser tbUser, String ckStatus,Integer deptId) {
+        if(ckStatus.equalsIgnoreCase("on")) {
+            tbUser.setStatus(1);
+        }else {
+            tbUser.setStatus(0);
+        }
+        BaseResult result = userService.insert(tbUser);
+        TbUserDept tbUserDept = new TbUserDept();
+        LinkedHashMap resultData = (LinkedHashMap) result.getResultData();
+        TbUser user = MapAndModelConverge.mapToEntity(resultData,TbUser.class);
+        tbUserDept.setUid(user.getId());
+        tbUserDept.setDid(deptId);
+        userDeptService.insert(tbUserDept);
+        return "/user/userList";
+    }
+
+    @GetMapping("delete")
+    public String delete(Model model,Integer id) {
+        BaseResult result = userService.delete(id);
+        if(result.getResultCode()!= 200) {
+            model.addAttribute("message",result.getResultMsg());
+        }
+        return "/user/userList";
+    }
+
+    @PostMapping("updateUser")
+    public String updateUser(Model model, TbUser tbUser, String ckStatus) {
+        if(ckStatus.equalsIgnoreCase("on")) {
+            tbUser.setStatus(1);
+        }else {
+            tbUser.setStatus(0);
+        }
+        BaseResult result = userService.update(tbUser);
+        if(result.getResultCode() != 200) {
+            model.addAttribute("message",result.getResultMsg());
+        }
+        return "/user/userList";
+    }
+
+    @GetMapping("addRole")
+    public String addRole(Integer id) {
+
+        return null;
+    }
+}
